@@ -1,5 +1,5 @@
 <?php
-include("config.php");
+include("../../config.php");
 
 function create_jwt($header, $content){
     $header_base64 = base64_encode($header);
