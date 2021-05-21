@@ -1,5 +1,5 @@
 <?php
-include("../../config.php");
+include("config.php");
 
 function create_jwt($header, $content){
     $header_base64 = base64_encode($header);
@@ -26,7 +26,7 @@ function get_jwt_content($jwt){
 }
 
 function calculate_signature($header_base64, $content_base64){
-    return hash($jwt_hash_algo, $header_base64 . $content_base64 . $jwt_secret);
+    return hash("sha256", $header_base64 . $content_base64 . "secret");
 }
 
 function part_jwt($jwt){
