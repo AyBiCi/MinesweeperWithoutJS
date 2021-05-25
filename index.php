@@ -3,7 +3,7 @@
 <HTML>
     <HEAD>
         <TITLE> Minesweeper </TITLE>
-        <LINK rel="stylesheet" href="style.css">
+        <LINK rel="stylesheet" href="style.css?1">
     </HEAD>
     <BODY>
         <div id="up">
