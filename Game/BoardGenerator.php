@@ -23,17 +23,16 @@ class BoardGenerator{
     }
 
     private static function calculateNumbers($boardSet){
-        for($x = 0; $x < $boardSet->width;$x++)
-            for($y = 0; $y < $boardSet->height;$y++){
-                if(!$boardSet->getTile($x,$y)->isMine()){
-                    $numOfMines = 0;
-                    
-                    foreach($boardSet->tilesNearTile($x, $y) as $tile)
-                        if($tile->isMine())
-                            $numOfMines++;
+        foreach($boardSet -> everyTile() as $tile){
+            if(!$tile->isMine()){
+                $numOfMines = 0;
+                
+                foreach($boardSet->tilesNearTile($tile) as $tile2)
+                    if($tile2->isMine())
+                        $numOfMines++;
 
-                    $boardSet->getTile($x,$y)->setValue($numOfMines);
-                }
+                $tile->setValue($numOfMines);
             }
+        }
     }
 }
