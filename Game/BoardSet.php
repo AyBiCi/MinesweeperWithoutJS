@@ -1,21 +1,45 @@
 <?php namespace Minesweeper\Game;
 
+use Minesweeper\Game\Tile;
+
 class BoardSet{
     public $width = 20;
     public $height = 20;
 
-    public $tile_cover;
-    public $tiles; 
+    private $tiles;
 
     public function __construct( ){
-        $this->tile_cover = array(array());
-        $this->tiles = array(array());
-        for($x=0;$x<$this->width;$x++) {
-            for($y=0;$y<$this->height;$y++) {
-                $this->tile_cover[$x][$y] = 1;
-                $this->tiles[$x][$y] = 0;
+        $this->clearBoard(); 
+    }
+
+    public function reveal($x, $y){
+        $this->getTile($x, $y)->uncover();
+        if($this->getTile($x, $y)->isBlank())
+            $this->revealBlanks($x,$y);
+    }
+
+    public function revealBlanks($x, $y){
+        foreach($this->tilesNearTile($x, $y) as $tile){
+            if($tile->isCovered()){
+                $tile->uncover();
+                if($tile->isBlank())
+                    $this->revealBlanks($tile->getX(), $tile->getY());
             }
         }
+    }
+    
+    public function toJSON(){
+        $object = array();
+        
+        $object["width"] = $this->width;
+        $object["height"] = $this->height;
+
+        for($x = 0; $x < $this->width; $x++)
+        for($y = 0; $y < $this->height; $y++){
+            $object["tiles"][$x][$y] = $this->tiles[$x][$y]->toArray();
+        }   
+
+        return json_encode($object);
     }
 
     public function loadJSON($json){
@@ -23,39 +47,33 @@ class BoardSet{
 
         $this->width = $object->width;
         $this->height = $object->height;
-        $this->tile_cover = $object->tile_cover;
-        $this->tiles = $object->tiles;
+
+        for($x = 0; $x < $this->width; $x++)
+        for($y = 0; $y < $this->height; $y++){
+            $tile = new Tile($x, $y);
+            $tile->loadFromArray($object->tiles[$x][$y]); 
+            $this->tiles[$x][$y] = $tile;
+        }   
     }
 
-    public function isMine($x, $y) : bool{
-        return $this->tiles[$x][$y] == 9;
-    }
+    public function clearBoard(){
+        $this->realTiles = array(array());
 
-    public function toJSON(){
-        $object = array();
-        
-        $object["width"] = $this->width;
-        $object["height"] = $this->height;
-        $object["tile_cover"] = $this->tile_cover;
-        $object["tiles"] = $this->tiles;
-
-        return json_encode($object);
-    }
-
-    public function reveal($x, $y){
-        $this->tile_cover[$x][$y] = 0;
-        if($this->tiles[$x][$y] == 0)
-            $this->revealBlanks($x,$y);
-    }
-
-    public function revealBlanks($x, $y){
-        for($ex = ($x != 0 ? $x-1 : $x); $ex <= ($x != 19 ? $x+1 : $x);$ex++)
-        for($ey = ($y != 0 ? $y-1 : $y); $ey <= ($y != 19 ? $y+1 : $y);$ey++){
-            if($this->tile_cover[$ex][$ey] == 1){
-                $this->tile_cover[$ex][$ey] = 0;
-                if($this->tiles[$ex][$ey] == 0)
-                    $this->revealBlanks($ex, $ey);
+        for($x=0;$x<$this->width;$x++)
+            for($y=0;$y<$this->height;$y++){
+                $this->tiles[$x][$y] = new Tile($x, $y);
             }
-        }
+    }
+
+    public function getTile($x, $y) : Tile{
+        return $this->tiles[$x][$y];
+    }
+
+    public function tilesNearTile($x, $y){
+        $tilesNear = new \ArrayObject();
+        for($ex = ($x != 0 ? $x-1 : $x); $ex <= ($x != 19 ? $x+1 : $x);$ex++)
+            for($ey = ($y != 0 ? $y-1 : $y); $ey <= ($y != 19 ? $y+1 : $y);$ey++)
+                $tilesNear->append($this->getTile($ex,$ey));
+        return $tilesNear;
     }
 }

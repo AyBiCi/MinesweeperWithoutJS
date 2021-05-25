@@ -12,7 +12,7 @@ class BoardRenderer{
         echo '<div id="board">';
         for($y=0;$y<$this->boardSet->height;$y++) {
             for($x=0;$x<$this->boardSet->width; $x++){
-                echo $this->getTileDiv($this->boardSet->tile_cover[$x][$y], $this->boardSet->tiles[$x][$y], $x, $y);
+                echo $this->getTileDiv($this->boardSet->getTile($x,$y)->isCovered(), $this->boardSet->getTile($x,$y)->getValue(), $x, $y);
             }
             echo '<div style="clear:both"></div>';
         }

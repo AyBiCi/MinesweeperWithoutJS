@@ -21,6 +21,7 @@
             require_once("Game/BoardSet.php");
             require_once("Game/BoardRenderer.php");
             require_once("Game/BoardGenerator.php");
+            require_once("Game/Tile.php");
 
             use Minesweeper\Game\BoardRenderer;
             use Minesweeper\Game\BoardSet;
@@ -46,8 +47,6 @@
             $boardRenderer = new BoardRenderer($boardSet);
             $_SESSION["boardSet"] = $boardSet->toJSON();
             $boardRenderer->show();
-            
-
         ?>
     </BODY>
 </HTML>

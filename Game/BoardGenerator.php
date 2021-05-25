@@ -15,8 +15,8 @@ class BoardGenerator{
             $x = rand(0, 19);
             $y = rand(0, 19);
 
-            if($boardSet->tiles[$x][$y] != 9){
-                $boardSet->tiles[$x][$y] = 9;
+            if(!$boardSet->getTile($x,$y)->isMine()){
+                $boardSet->getTile($x,$y)->setValue(9);
                 $numOfMines--;
             }
         }
@@ -25,21 +25,14 @@ class BoardGenerator{
     private static function calculateNumbers($boardSet){
         for($x = 0; $x < $boardSet->width;$x++)
             for($y = 0; $y < $boardSet->height;$y++){
-                if(!$boardSet->isMine($x,$y)){
+                if(!$boardSet->getTile($x,$y)->isMine()){
                     $numOfMines = 0;
-                    if($y != 0 && $x != 0 && $boardSet->isMine($x-1, $y-1)) $numOfMines++;
-                    if($y != 0 && $boardSet->isMine($x, $y-1)) $numOfMines++;
-                    if($x != 19 && $y != 0 && $boardSet->isMine($x+1, $y-1)) $numOfMines++;
                     
-                    if($x != 0 && $boardSet->isMine($x-1, $y)) $numOfMines++;
-                    if($boardSet->isMine($x, $y)) $numOfMines++;
-                    if($x != 19 && $boardSet->isMine($x+1, $y)) $numOfMines++;
-                    
-                    if($y != 19 && $x != 0 && $boardSet->isMine($x-1, $y+1)) $numOfMines++;
-                    if($y != 19 && $boardSet->isMine($x, $y+1)) $numOfMines++;
-                    if($x != 19 && $y != 19 && $boardSet->isMine($x+1, $y+1)) $numOfMines++;
+                    foreach($boardSet->tilesNearTile($x, $y) as $tile)
+                        if($tile->isMine())
+                            $numOfMines++;
 
-                    $boardSet->tiles[$x][$y] = $numOfMines;
+                    $boardSet->getTile($x,$y)->setValue($numOfMines);
                 }
             }
     }
