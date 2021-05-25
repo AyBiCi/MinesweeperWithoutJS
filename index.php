@@ -3,36 +3,7 @@
 <HTML>
     <HEAD>
         <TITLE> Minesweeper </TITLE>
-        <STYLE>
-            body{
-                padding: 0px;
-                margin: 0px;
-            }
-            #up{
-                width: 100%;
-                height: 10%;
-                background: gray;
-                color: white;
-                font-size: 40px;
-                line-height: 100px;
-                text-align: center;
-                float: left;
-            }
-            #options{
-                width: 300px;
-                height: 700px;
-                float: left;
-                background: darkgray;
-            }
-            .tile{
-                width: 32px;
-                height: 32px;
-                float: left;
-            }
-            #board{
-                float: left;
-            }
-        </STYLE>
+        <LINK rel="stylesheet" href="style.css">
     </HEAD>
     <BODY>
         <div id="up">
