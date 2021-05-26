@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <!DOCTYPE HTML>
 <HTML>
     <HEAD>
@@ -22,30 +21,31 @@
             require_once("Game/BoardRenderer.php");
             require_once("Game/BoardGenerator.php");
             require_once("Game/Tile.php");
+            require_once("Session/Session.php");
 
             use Minesweeper\Game\BoardRenderer;
             use Minesweeper\Game\BoardSet;
             use Minesweeper\Game\BoardGenerator;
-
-            $cookieName = "marec";
+            use Minesweeper\Session\Session;
             
-            $boardSet = new BoardSet();
-            $boardSet->loadJSON($_SESSION["boardSet"]);
+            $session = new Session();
+            $session->loadSession();
+
             $numofmines = 30;
             $new = false;
 
-            if(isset($_GET["numofmines"]) && $_GET["numofmines"] != 0) {
+            if(isset($_GET["numofmines"])) {
                 $numofmines = $_GET["numofmines"];
-                $boardSet = BoardGenerator::generateBoard($numofmines);
+                $session->setNewBoard(BoardGenerator::generateBoard($numofmines));
                 $new = true;
             }
 
             if(isset($_GET["clickx"])){
-                $boardSet->reveal($_GET["clickx"], $_GET["clicky"]);
+                $session->getBoardSet()->reveal($_GET["clickx"], $_GET["clicky"]);
             }
 
-            $boardRenderer = new BoardRenderer($boardSet);
-            $_SESSION["boardSet"] = $boardSet->toJSON();
+            $boardRenderer = new BoardRenderer($session->getBoardSet());
+            $session->saveBoard();
             $boardRenderer->show();
         ?>
     </BODY>
