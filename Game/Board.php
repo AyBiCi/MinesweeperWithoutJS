@@ -2,7 +2,7 @@
 
 use Minesweeper\Game\Tile;
 
-class BoardSet{
+class Board{
     public $width = 20;
     public $height = 20;
 

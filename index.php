@@ -2,29 +2,38 @@
 <HTML>
     <HEAD>
         <TITLE> Minesweeper </TITLE>
-        <LINK rel="stylesheet" href="style.css?1">
+        <LINK rel="stylesheet" href="style.css?4">
     </HEAD>
     <BODY>
         <div id="up">
            Minesweeper
         </div>
-        <div id="options">
-            <form action="#" method="get">
-                Mines number: 
-                <input type="number" name="numofmines">
-                <input type="submit" value="Generate new board">
-            </form>
+        <div id="left-panel">
+            <div id="options">
+                <form action="#" method="get">
+                    Mines number: 
+                    <input type="number" name="numofmines">
+                    <input type="submit" value="Generate new board">
+                </form>
+            </div>
+
+            <div id="mode">
+                <form action="?depressor" method="get">
+                    <input type="submit" id="depressor" class="tool" name="tool" value="depressor">
+                    <input type="submit" id="flag" class="tool" name="tool" value="flag">
+                </form>
+            </div>
         </div>
 
         <?php
-            require_once("Game/BoardSet.php");
+            require_once("Game/Board.php");
             require_once("Game/BoardRenderer.php");
             require_once("Game/BoardGenerator.php");
             require_once("Game/Tile.php");
             require_once("Session/Session.php");
 
             use Minesweeper\Game\BoardRenderer;
-            use Minesweeper\Game\BoardSet;
+            use Minesweeper\Game\Board;
             use Minesweeper\Game\BoardGenerator;
             use Minesweeper\Session\Session;
             

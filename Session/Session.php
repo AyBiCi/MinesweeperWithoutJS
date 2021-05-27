@@ -1,35 +1,35 @@
 <?php namespace Minesweeper\Session;
 
-use Minesweeper\Game\BoardSet;
+use Minesweeper\Game\Board;
 
 session_start();
 
 class Session{
-    private $boardSet;
+    private $board;
 
     public function loadSession(){
-        if($this->hasSavedBoardSet()) $this->boardSet = $this->getSavedBoardSet();
+        if($this->hasSavedBoardSet()) $this->board = $this->getSavedBoardSet();
     }
 
     public function hasSavedBoardSet() : bool{
         return isset($_SESSION["board"]);
     }
 
-    public function getBoardSet() : BoardSet{
-        return $this->boardSet;
+    public function getBoardSet() : Board{
+        return $this->board;
     }
 
     public function saveBoard(){
-        $_SESSION["board"] = $this->boardSet->toJSON();
+        $_SESSION["board"] = $this->board->toJSON();
     }
 
-    public function setNewBoard($boardSet){
-        $this->boardSet = $boardSet;
+    public function setNewBoard($board){
+        $this->board = $board;
     }
 
-    private function getSavedBoardSet() : BoardSet{
-        $boardSet = new BoardSet();
-        $boardSet->loadJSON($_SESSION["board"]);
-        return $boardSet; 
+    private function getSavedBoardSet() : Board{
+        $board = new Board();
+        $board->loadJSON($_SESSION["board"]);
+        return $board; 
     }
 }

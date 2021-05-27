@@ -4,17 +4,17 @@ use Minesweeper\Game\Tile;
 
 class BoardRenderer{
 
-    private $boardSet;
+    private $board;
 
-    public function __construct($boardSet){
-        $this->boardSet = $boardSet;
+    public function __construct($board){
+        $this->board = $board;
     }
 
     public function show(){
         echo '<div id="board">';
-        for($y=0;$y<$this->boardSet->height;$y++) {
-            for($x=0;$x<$this->boardSet->width; $x++){
-                echo $this->getTileDiv($this->boardSet->getTile($x,$y));
+        for($y=0;$y<$this->board->height;$y++) {
+            for($x=0;$x<$this->board->width; $x++){
+                echo $this->getTileDiv($this->board->getTile($x,$y));
             }
             echo '<div style="clear:both"></div>';
         }

@@ -1,7 +1,5 @@
 <?php namespace Minesweeper\Game;
 
-use Minesweeper\Game\BoardSet;
-
 class Tile{
     private $x;
     private $y;
