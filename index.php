@@ -31,31 +31,33 @@
             require_once("Game/BoardGenerator.php");
             require_once("Game/Tile.php");
             require_once("Session/Session.php");
+            require_once("Input/GameInput.php");
 
             use Minesweeper\Game\BoardRenderer;
             use Minesweeper\Game\Board;
             use Minesweeper\Game\BoardGenerator;
             use Minesweeper\Session\Session;
-            
+            use Minesweeper\Input\GameInput;
+
             $session = new Session();
             $session->loadSession();
-
-            $numofmines = 30;
-            $new = false;
-
             if(isset($_GET["numofmines"])) {
                 $numofmines = $_GET["numofmines"];
                 $session->setNewBoard(BoardGenerator::generateBoard($numofmines));
                 $new = true;
             }
-
-            if(isset($_GET["clickx"])){
-                $session->getBoardSet()->reveal($_GET["clickx"], $_GET["clicky"]);
-            }
-
+            
+            $gameInput = new GameInput($session->getBoardSet());
             $boardRenderer = new BoardRenderer($session->getBoardSet());
-            $session->saveBoard();
+
+            $numofmines = 30;
+            $new = false;
+
+            
+
+            $gameInput->updateInput();
             $boardRenderer->show();
+            $session->saveBoard();
         ?>
     </BODY>
 </HTML>

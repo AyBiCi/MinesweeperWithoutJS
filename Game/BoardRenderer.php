@@ -24,7 +24,8 @@ class BoardRenderer{
     private static function getTileDiv($tile){
         $image;
 
-        if($tile->isCovered()) $image = "tile.png";
+        if($tile->isFlagged()) $image = "flagged.png";
+        else if($tile->isCovered()) $image = "tile.png";
         else if($tile->isBlank()) $image = "blank.png";
         else if($tile->isMine()) $image = "mine.png";
         else $image = $tile->getValue().".png";

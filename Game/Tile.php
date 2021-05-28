@@ -5,6 +5,7 @@ class Tile{
     private $y;
 
     private $is_covered;
+    private $is_flagged = false;
     private $value;
 
     public function __construct($x, $y){
@@ -51,6 +52,7 @@ class Tile{
         
         $object["x"] = $this->x;
         $object["y"] = $this->y;
+        $object["is_flagged"] = $this->is_flagged;
         $object["is_covered"] = $this->is_covered;
         $object["value"] = $this->value;
 
@@ -61,7 +63,28 @@ class Tile{
         $this->x = $array->x;
         $this->y = $array->y;
         $this->is_covered = $array->is_covered;
+        $this->is_flagged = $array->is_flagged;
         $this->value = $array->value;
     }
-     
+
+    public function flag(){
+        if($this->isCovered()){
+            $this->is_flagged = true;
+        }
+    }
+
+    public function unflag(){
+        $this->is_flagged = false;
+    }
+    
+    public function isFlagged(){
+        return $this->is_flagged;
+    }
+
+    public function switchFlag(){
+        if($this->isFlagged())
+            $this->unflag();
+        else
+            $this->flag();
+    }
 }
