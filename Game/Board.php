@@ -12,14 +12,14 @@ class Board{
         $this->clearBoard(); 
     }
 
-    public function reveal($x, $y){
+    public function reveal(int $x, int $y){
         $tile = $this->getTile($x, $y);
         $tile->uncover();
         if($tile->isBlank())
             $this->revealBlanks($x,$y);
     }
 
-    public function revealBlanks($x, $y){
+    public function revealBlanks(int $x, int $y){
         foreach($this->tilesNearTile($this->getTile($x, $y)) as $tile){
             if($tile->isCovered()){
                 $tile->uncover();
@@ -38,11 +38,11 @@ class Board{
             }
     }
 
-    public function getTile($x, $y) : Tile{
+    public function getTile(int $x, int $y) : Tile{
         return $this->tiles[$x][$y];
     }
 
-    public function tilesNearTile($tile){
+    public function tilesNearTile(Tile $tile) : \ArrayObject{
         $tilesNear = new \ArrayObject();
         $x = $tile->getX();
         $y = $tile->getY();
@@ -53,7 +53,7 @@ class Board{
         return $tilesNear;
     }
 
-    public function everyTile(){
+    public function everyTile() : \ArrayObject{
         $everyTile = new \ArrayObject();
         for($y=0;$y<$this->height;$y++) 
             for($x=0;$x<$this->width; $x++)
@@ -61,7 +61,7 @@ class Board{
         return $everyTile;
     }
 
-    public function toJSON(){
+    public function toJSON() : string{
         $object = array();
         
         $object["width"] = $this->width;
@@ -75,7 +75,7 @@ class Board{
         return json_encode($object);
     }
 
-    public function loadJSON($json){
+    public function loadJSON(string $json){
         $object = json_decode($json);
 
         $this->width = $object->width;

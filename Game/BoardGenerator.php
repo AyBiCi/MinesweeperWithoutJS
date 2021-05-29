@@ -3,14 +3,14 @@
 use Minesweeper\Game\Board;
 
 class BoardGenerator{
-    public static function generateBoard($numOfMines){
+    public static function generateBoard(int $numOfMines) : Board{
         $board = new Board();
         BoardGenerator::placeMines($numOfMines, $board); 
         Boardgenerator::calculateNumbers($board); 
         return $board;
     }
 
-    private static function placeMines($numOfMines, $board){
+    private static function placeMines(int $numOfMines, Board $board){
         while($numOfMines != 0){
             $x = rand(0, 19);
             $y = rand(0, 19);
@@ -22,7 +22,7 @@ class BoardGenerator{
         }
     }
 
-    private static function calculateNumbers($board){
+    private static function calculateNumbers(Board $board){
         foreach($board -> everyTile() as $tile){
             if(!$tile->isMine()){
                 $numOfMines = 0;

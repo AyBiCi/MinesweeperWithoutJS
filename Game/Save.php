@@ -23,7 +23,7 @@ class Save{
         $_SESSION["board"] = $this->board->toJSON();
     }
 
-    public function setNewBoard($board){
+    public function setNewBoard(Board $board){
         $_SESSION["board"] = $board->toJSON();
     }
 

@@ -38,7 +38,7 @@ class GameInput{
         }
     }
 
-    private function resultClick($x, $y){
+    private function resultClick(int $x, int $y){
         if($this->tool == "depressor")
             $this->board->reveal($x, $y);
         else

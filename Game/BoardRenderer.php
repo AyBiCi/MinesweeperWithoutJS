@@ -6,7 +6,7 @@ class BoardRenderer{
 
     private $board;
 
-    public function __construct($board){
+    public function __construct(Board $board){
         $this->board = $board;
     }
 
@@ -21,7 +21,7 @@ class BoardRenderer{
         echo '</div>';
     }
 
-    private static function getTileDiv(Tile $tile){
+    private static function getTileDiv(Tile $tile) : string{
         $image;
 
         if($tile->isFlagged()) $image = "flagged.png";

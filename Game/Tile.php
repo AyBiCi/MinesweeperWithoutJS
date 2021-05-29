@@ -19,7 +19,7 @@ class Tile{
         return $this->is_covered;
     }
 
-    public function isMine(){
+    public function isMine() : bool{
         return $this->value == 9;
     }
 
@@ -31,23 +31,23 @@ class Tile{
         return $this->value == 0;
     }
 
-    public function getX(){
+    public function getX() : int{
         return $this->x;
     }
     
-    public function getY(){
+    public function getY() : int{
         return $this->y;
     }
 
-    public function setValue($value){
+    public function setValue(int $value){
         $this->value = $value;
     }
 
-    public function getValue(){
+    public function getValue() : int{
         return $this->value;
     }
 
-    public function toArray(){
+    public function toArray() : array{
         $object = array();
         
         $object["x"] = $this->x;
@@ -59,7 +59,7 @@ class Tile{
         return $object;
     }
 
-    public function loadFromArray($array){
+    public function loadFromArray(Object $array){
         $this->x = $array->x;
         $this->y = $array->y;
         $this->is_covered = $array->is_covered;
@@ -77,7 +77,7 @@ class Tile{
         $this->is_flagged = false;
     }
     
-    public function isFlagged(){
+    public function isFlagged() : bool{
         return $this->is_flagged;
     }
 
