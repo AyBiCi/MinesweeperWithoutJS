@@ -21,7 +21,7 @@ class BoardRenderer{
         echo '</div>';
     }
 
-    private static function getTileDiv($tile){
+    private static function getTileDiv(Tile $tile){
         $image;
 
         if($tile->isFlagged()) $image = "flagged.png";

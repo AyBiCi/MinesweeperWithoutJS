@@ -22,6 +22,7 @@ class GameInput{
     }
 
     private function loadTool(){
+        if(isset($_SESSION["tool"]))
         $this->tool = $_SESSION["tool"];
     }
 

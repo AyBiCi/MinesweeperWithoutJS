@@ -30,34 +30,32 @@
             require_once("Game/BoardRenderer.php");
             require_once("Game/BoardGenerator.php");
             require_once("Game/Tile.php");
-            require_once("Session/Session.php");
+            require_once("Game/Save.php");
             require_once("Input/GameInput.php");
+            require_once("Game/Game.php");
 
+            use Minesweeper\Game\Game;
             use Minesweeper\Game\BoardRenderer;
             use Minesweeper\Game\Board;
             use Minesweeper\Game\BoardGenerator;
-            use Minesweeper\Session\Session;
+            use Minesweeper\Game\Save;
             use Minesweeper\Input\GameInput;
 
-            $session = new Session();
-            $session->loadSession();
+            $save = new Save();
+
             if(isset($_GET["numofmines"])) {
                 $numofmines = $_GET["numofmines"];
-                $session->setNewBoard(BoardGenerator::generateBoard($numofmines));
-                $new = true;
+                $save->setNewBoard(BoardGenerator::generateBoard($numofmines));
             }
-            
-            $gameInput = new GameInput($session->getBoardSet());
-            $boardRenderer = new BoardRenderer($session->getBoardSet());
 
-            $numofmines = 30;
-            $new = false;
-
-            
-
-            $gameInput->updateInput();
-            $boardRenderer->show();
-            $session->saveBoard();
+            if($save->hasSave()){
+                $save->loadSave();
+                $game = new Game($save);
+                $game->loop();
+            }
+            else{
+                echo "You don't have any saved game! Generate new board.";
+            }
         ?>
     </BODY>
 </HTML>
