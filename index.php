@@ -1,3 +1,31 @@
+<?php
+    require_once("Game/Board.php");
+    require_once("Game/BoardRenderer.php");
+    require_once("Game/BoardGenerator.php");
+    require_once("Game/Tile.php");
+    require_once("Game/Save.php");
+    require_once("Input/BoardInput.php");
+    require_once("Game/Game.php");
+    require_once("Input/NewBoardRequestChecker.php");
+
+    use Minesweeper\Input\NewBoardRequestChecker;
+    use Minesweeper\Game\Game;
+    use Minesweeper\Game\BoardRenderer;
+    use Minesweeper\Game\Board;
+    use Minesweeper\Game\BoardGenerator;
+    use Minesweeper\Game\Save;
+    use Minesweeper\Input\GameInput;
+
+    $save = new Save();
+    $newBoardInput = new NewBoardRequestChecker($save);
+    $newBoardInput->resolveRequestIfExists();
+
+    if($save->hasSave()){
+        $save->loadSave();
+        $game = new Game($save);
+        $game->loop();
+    }
+?>
 <!DOCTYPE HTML>
 <HTML>
     <HEAD>
@@ -13,13 +41,13 @@
                 <form action="#" method="get">
                     Mines number<br> 
                     <input type="number" class="button" id="minesnuminput" name="numofmines">
-                    <input type="submit" class="button" value="Generate new board">
+                    <input type="submit" class="button" value="Create new board">
                 </form>
             </div>
 
             <div id="stats" class="leftblock">
                 Flags: <br>
-                Mines: <br>
+                Mines: <?=$save->getBoard()->getNumberOfMines()?> <br>
             </div>
 
             <div id="mode">
@@ -29,36 +57,13 @@
                 </form>
             </div>
         </div>
-
         <?php
-            require_once("Game/Board.php");
-            require_once("Game/BoardRenderer.php");
-            require_once("Game/BoardGenerator.php");
-            require_once("Game/Tile.php");
-            require_once("Game/Save.php");
-            require_once("Input/BoardInput.php");
-            require_once("Game/Game.php");
-            require_once("Input/NewBoardRequestChecker.php");
-
-            use Minesweeper\Input\NewBoardRequestChecker;
-            use Minesweeper\Game\Game;
-            use Minesweeper\Game\BoardRenderer;
-            use Minesweeper\Game\Board;
-            use Minesweeper\Game\BoardGenerator;
-            use Minesweeper\Game\Save;
-            use Minesweeper\Input\GameInput;
-
-            $save = new Save();
-            $newBoardInput = new NewBoardRequestChecker($save);
-            $newBoardInput->resolveRequestIfExists();
-
             if($save->hasSave()){
-                $save->loadSave();
-                $game = new Game($save);
-                $game->loop();
+                $boardRenderer = new BoardRenderer($save->getBoard());
+                $boardRenderer->show();
             }
             else{
-                echo "You don't have any saved game! Generate new board.";
+                echo "You don't have saved game! Create new board";
             }
         ?>
     </BODY>

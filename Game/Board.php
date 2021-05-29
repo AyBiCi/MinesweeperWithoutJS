@@ -6,6 +6,7 @@ class Board{
     public $width = 20;
     public $height = 20;
 
+    private $numberOfMines;
     private $tiles;
 
     public function __construct( ){
@@ -66,6 +67,7 @@ class Board{
         
         $object["width"] = $this->width;
         $object["height"] = $this->height;
+        $object["mines"] = $this->numberOfMines;
 
         for($x = 0; $x < $this->width; $x++)
         for($y = 0; $y < $this->height; $y++){
@@ -80,6 +82,7 @@ class Board{
 
         $this->width = $object->width;
         $this->height = $object->height;
+        $this->numberOfMines = $object->mines;
 
         for($x = 0; $x < $this->width; $x++)
         for($y = 0; $y < $this->height; $y++){
@@ -87,5 +90,11 @@ class Board{
             $tile->loadFromArray($object->tiles[$x][$y]); 
             $this->tiles[$x][$y] = $tile;
         }   
+    }
+    public function setNumberOfMines(int $number){
+        $this->numberOfMines = $number;
+    }
+    public function getNumberOfMines() : int{
+        return $this->numberOfMines;
     }
 }

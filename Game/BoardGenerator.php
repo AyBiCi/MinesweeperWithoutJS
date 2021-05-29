@@ -5,6 +5,7 @@ use Minesweeper\Game\Board;
 class BoardGenerator{
     public static function generateBoard(int $numOfMines) : Board{
         $board = new Board();
+        $board->setNumberOfMines($numOfMines);
         BoardGenerator::placeMines($numOfMines, $board); 
         Boardgenerator::calculateNumbers($board); 
         return $board;

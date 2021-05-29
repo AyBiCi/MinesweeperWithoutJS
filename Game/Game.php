@@ -12,10 +12,7 @@ class Game{
 
     public function loop(){
         $gameInput = new BoardInput($this->save->getBoard());
-        $boardRenderer = new BoardRenderer($this->save->getBoard());
-
         $gameInput->updateInput();
-        $boardRenderer->show();
         $this->save->saveBoard();
     }
 }
