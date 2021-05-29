@@ -1,6 +1,6 @@
 <?php namespace Minesweeper\Game;
 
-use Minesweeper\Input\GameInput;
+use Minesweeper\Input\BoardInput;
 use Minesweeper\Game\BoardRenderer;
 
 class Game{
@@ -11,7 +11,7 @@ class Game{
     }
 
     public function loop(){
-        $gameInput = new GameInput($this->save->getBoard());
+        $gameInput = new BoardInput($this->save->getBoard());
         $boardRenderer = new BoardRenderer($this->save->getBoard());
 
         $gameInput->updateInput();

@@ -2,7 +2,7 @@
 
 use Minesweeper\Game\Board;
 
-class GameInput{
+class BoardInput{
     private $tool = "depressor";
     private $board;
 

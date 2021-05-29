@@ -31,9 +31,11 @@
             require_once("Game/BoardGenerator.php");
             require_once("Game/Tile.php");
             require_once("Game/Save.php");
-            require_once("Input/GameInput.php");
+            require_once("Input/BoardInput.php");
             require_once("Game/Game.php");
+            require_once("Input/NewBoardRequestChecker.php");
 
+            use Minesweeper\Input\NewBoardRequestChecker;
             use Minesweeper\Game\Game;
             use Minesweeper\Game\BoardRenderer;
             use Minesweeper\Game\Board;
@@ -42,11 +44,8 @@
             use Minesweeper\Input\GameInput;
 
             $save = new Save();
-
-            if(isset($_GET["numofmines"])) {
-                $numofmines = $_GET["numofmines"];
-                $save->setNewBoard(BoardGenerator::generateBoard($numofmines));
-            }
+            $newBoardInput = new NewBoardRequestChecker($save);
+            $newBoardInput->resolveRequestIfExists();
 
             if($save->hasSave()){
                 $save->loadSave();
