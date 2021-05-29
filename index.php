@@ -2,19 +2,24 @@
 <HTML>
     <HEAD>
         <TITLE> Minesweeper </TITLE>
-        <LINK rel="stylesheet" href="style.css?4">
+        <LINK rel="stylesheet" href="style.css?5">
     </HEAD>
     <BODY>
-        <div id="up">
-           Minesweeper
-        </div>
         <div id="left-panel">
-            <div id="options">
+            <div id="logo" class="leftblock">
+                Minesweeper
+            </div>
+            <div id="newboard" class="leftblock">
                 <form action="#" method="get">
-                    Mines number: 
-                    <input type="number" name="numofmines">
-                    <input type="submit" value="Generate new board">
+                    Mines number<br> 
+                    <input type="number" class="button" id="minesnuminput" name="numofmines">
+                    <input type="submit" class="button" value="Generate new board">
                 </form>
+            </div>
+
+            <div id="stats" class="leftblock">
+                Flags: <br>
+                Mines: <br>
             </div>
 
             <div id="mode">
