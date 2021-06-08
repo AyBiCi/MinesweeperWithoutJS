@@ -46,16 +46,28 @@
             </div>
 
             <div id="stats" class="leftblock">
-                Flags: <?= ( isset($_SESSION["flags"]) ? $_SESSION["flags"] : 0) ?><br>
-                Mines: <?=$save->getBoard()->getNumberOfMines()?> <br>
+            <?php
+            if(!$game->isLost() && !$game->isWon()) {
+                $numOfFlags = (isset($_SESSION["flags"]) ? $_SESSION["flags"] : 0); 
+                $numOfMines = $save->getBoard()->getNumberOfMines();
+                echo "Flags: $numOfFlags<br>";
+                echo "Mines: $numOfMines";
+            }
+            else if($game->isLost()){
+                echo "<H2> YOU LOST! </H2>";
+            }
+            else{
+                echo "<H2> YOU WON! </H2>";
+            }
+            ?>
             </div>
-
             <div id="mode">
                 <form action="?depressor" method="get">
                     <input type="submit" id="depressor" class="tool" name="tool" value="depressor">
                     <input type="submit" id="flag" class="tool" name="tool" value="flag">
                 </form>
             </div>
+         
         </div>
         <?php
             if($save->hasSave()){

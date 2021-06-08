@@ -14,6 +14,9 @@ class NewBoardRequestChecker{
         if(isset($_GET["numofmines"])) {
             $numofmines = $_GET["numofmines"];
             $this->save->setNewBoard(BoardGenerator::generateBoard($numofmines));
+            unset($_SESSION["lost"]);
+            unset($_SESSION["win"]);
+            $_SESSION["flags"] = 0;
         }
     }
 }

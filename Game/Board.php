@@ -99,4 +99,11 @@ class Board{
     public function getNumberOfMines() : int{
         return $this->numberOfMines;
     }
+
+    public function uncoverLoss(){
+        foreach($this->everyTile() as $tile){
+            if($tile->isMine() && !$tile->isFlagged())
+                $tile->uncover();
+        }
+    }
 }

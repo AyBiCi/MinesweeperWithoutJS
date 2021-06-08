@@ -12,7 +12,18 @@ class Game{
 
     public function loop(){
         $gameInput = new BoardInput($this->save->getBoard());
-        $gameInput->updateInput();
+        if(!isset($_SESSION["lost"]) && !isset($_SESSION["win"]))
+            $gameInput->updateInput();
+
+        $this->save->checkForWinOrLost();
         $this->save->saveBoard();
+    }
+
+    public function isLost(){
+        return isset($_SESSION["lost"]);
+    }
+
+    public function isWon(){
+        return isset($_SESSION["win"]);
     }
 }
