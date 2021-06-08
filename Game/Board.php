@@ -37,6 +37,8 @@ class Board{
             for($y=0;$y<$this->height;$y++){
                 $this->tiles[$x][$y] = new Tile($x, $y);
             }
+        
+        $numberOfFlags = $numberOfMines = 0;
     }
 
     public function getTile(int $x, int $y) : Tile{
