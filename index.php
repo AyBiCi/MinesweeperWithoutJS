@@ -46,7 +46,7 @@
             </div>
 
             <div id="stats" class="leftblock">
-                Flags: <br>
+                Flags: <?= ( isset($_SESSION["flags"]) ? $_SESSION["flags"] : 0) ?><br>
                 Mines: <?=$save->getBoard()->getNumberOfMines()?> <br>
             </div>
 

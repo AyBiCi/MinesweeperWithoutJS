@@ -70,11 +70,18 @@ class Tile{
     public function flag(){
         if($this->isCovered()){
             $this->is_flagged = true;
+            if(isset($_SESSION["flags"]))
+                $_SESSION["flags"]++;
+            else
+                $_SESSION["flags"] = 1;
         }
     }
 
     public function unflag(){
-        $this->is_flagged = false;
+        if($this->is_flagged){
+            $this->is_flagged = false;
+            $_SESSION["flags"]--;
+        }
     }
     
     public function isFlagged() : bool{
